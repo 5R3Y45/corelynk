@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import { motion } from "motion/react";
 
@@ -29,18 +29,14 @@ const characterLighting = [
 export function Signature() {
   const [isAwake, setIsAwake] = useState(false);
 
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setIsAwake(true));
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
   return (
     <motion.a
       href="https://sreyas.tech"
       target="_blank"
       rel="noreferrer"
       className={`signature-neon signature-neon-link ${isAwake ? "is-awake" : ""}`}
+      onViewportEnter={() => setIsAwake(true)}
+      viewport={{ once: true, amount: 0.4 }}
       aria-label={signature}
     >
       {signature.split("").map((character, index) => {
